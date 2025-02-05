@@ -1,23 +1,14 @@
 package com.nttdata.steps;
 
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.rest.SerenityRest;
 import org.junit.Assert;
 
-import static net.serenitybdd.rest.SerenityRest.given;
 import static net.serenitybdd.rest.SerenityRest.restAssuredThat;
 
 public class OrderStep {
 
     private static String CREATE_ORDER = "https://petstore.swagger.io/v2/store/order";
     private static String SEARCH_ORDER = "https://petstore.swagger.io/v2/store/order";
-
-    private Response response;
-    private RequestSpecBuilder builder;
-    private RequestSpecification requestSpecification;
 
     public void crearPedido(String requestBody) {
         SerenityRest.given()
@@ -45,16 +36,6 @@ public class OrderStep {
                 .then()
                 .log().all()
         ;
-    }
-
-    public void sendPostRequest(String api) {
-        response = given().spec(requestSpecification).when().post(api);
-    }
-
-    public void inicializoParametrosRequestPost() {
-        RestAssured.baseURI = CREATE_ORDER;
-        builder = new RequestSpecBuilder();
-        requestSpecification = builder.build();
     }
 
     public void validarBodyRespuesta(String compare, int orderIdEsperado) {
